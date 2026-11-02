@@ -1,0 +1,10 @@
+[package]
+name = "kvroute-sim"
+description = "Discrete-event simulator, KV-cache model, trace generator and metrics for kvroute."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+kvroute-core = { path = "../kvroute-core" }

@@ -1,0 +1,37 @@
+# kvroute — cache-aware, session-aware routing across LLM inference replicas.
+#
+# Phase-1 workspace. Three crates are implemented here:
+#   kvroute-core  — types, the Router trait, prefix hashing, the radix prefix
+#                   store, and the four baseline routers. No async, no I/O.
+#   kvroute-sim   — discrete-event simulator, LRU KV-cache model, seeded trace
+#                   generator and metrics. Depends only on kvroute-core.
+#   kvroute-cli   — the `kvroute` binary; `kvroute bench` runs every baseline on
+#                   one reproducible trace and prints the comparison table.
+#
+# Not yet built (see the design doc, phases 2-4):
+#   kvroute-state — tokio tracker, /metrics poller, ZMQ KV-event subscriber
+#   kvroute-proxy — axum OpenAI-compatible proxy
+#   kvroute-py    — PyO3 bindings
+#
+# Deliberately dependency-free for now so it builds offline. The design names
+# xxh3 / rand_chacha / tokenizers etc.; those are drop-in behind the interfaces
+# in kvroute-core (see prefix::hashing and kvroute-sim::rng).
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/kvroute-core",
+    "crates/kvroute-sim",
+    "crates/kvroute-cli",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/tanishq/kv-route"
+rust-version = "1.74"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

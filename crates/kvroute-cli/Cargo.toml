@@ -1,0 +1,15 @@
+[package]
+name = "kvroute-cli"
+description = "The kvroute command-line tool."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "kvroute"
+path = "src/main.rs"
+
+[dependencies]
+kvroute-core = { path = "../kvroute-core" }
+kvroute-sim = { path = "../kvroute-sim" }
